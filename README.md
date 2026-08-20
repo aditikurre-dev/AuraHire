@@ -2,12 +2,6 @@
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5A5F,50:7C5CFC,100:00C2A8&height=220&section=header&text=AuraHire&fontSize=72&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI-Powered%20Resume%20Screening%20for%20Modern%20HR%20Teams&descAlignY=58&descSize=18" width="100%" />
 
-<a href="https://github.com/aditikurre-dev/AuraHire/stargazers"><img src="https://img.shields.io/github/stars/aditikurre-dev/AuraHire?style=for-the-badge&color=FF5A5F&labelColor=1a1a2e" alt="stars"/></a>
-<a href="https://github.com/aditikurre-dev/AuraHire/network/members"><img src="https://img.shields.io/github/forks/aditikurre-dev/AuraHire?style=for-the-badge&color=7C5CFC&labelColor=1a1a2e" alt="forks"/></a>
-<a href="https://github.com/aditikurre-dev/AuraHire/issues"><img src="https://img.shields.io/github/issues/aditikurre-dev/AuraHire?style=for-the-badge&color=00C2A8&labelColor=1a1a2e" alt="issues"/></a>
-<img src="https://img.shields.io/badge/status-active%20development-FFD23F?style=for-the-badge&labelColor=1a1a2e" alt="status"/>
-
-<br/>
 
 <img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=600&size=22&duration=2800&pause=900&color=FF5A5F&center=true&vCenter=true&width=700&lines=Upload+a+zip+of+resumes.;Get+an+AI-ranked+shortlist+in+seconds.;Every+job+and+shortlist%2C+attributed+by+name.;Built+MERN+%2B+Python+%2B+Groq+LLM+%E2%9A%A1" alt="Typing SVG" />
 
@@ -17,7 +11,7 @@
 
 <div align="center">
 
-![React]
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
