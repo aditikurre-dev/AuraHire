@@ -147,9 +147,6 @@ GET /api/jobs/:id/results
 
 <br/>
 
-## Tech Stack
-
-```
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -201,7 +198,6 @@ GET /api/jobs/:id/results
 
 </details>
 
-```
 
 ## 🚀 Quick Start
 
