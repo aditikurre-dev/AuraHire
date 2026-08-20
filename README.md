@@ -85,34 +85,33 @@ Three services, run side by side — nothing talks to the frontend except the No
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-│                         AURAHIRE — SYSTEM ARCHITECTURE PIPELINE                            │
+│                         AURAHIRE — SYSTEM ARCHITECTURE PIPELINE                          │
 └──────────────────────────────────────────────────────────────────────────────────────────┘
 
-[ 1. FRONTEND LAYER ]           [ 2. BACKEND LAYER ]            [ 3. AI MICROSERVICE ]
+   [ 1. FRONTEND LAYER ]           [ 2. BACKEND LAYER ]            [ 3. AI MICROSERVICE ]
 ┌──────────────────────────┐    ┌──────────────────────────┐    ┌──────────────────────────┐
 │        React SPA         │◄──►│    Node.js / Express     │◄──►│      Python FastAPI      │
 │        Port :5173        │    │        Port :5000        │    │        Port :8001        │
 └──────────────────────────┘    └──────────────────────────┘    └──────────────────────────┘
-              │                               │                               │
-        HTTP REST API                                                 Internal REST API
-              │                                                               │
-              ▼                                                               ▼
-
-                                              │
-                                              ▼
+              │                               ▲                               │
+        HTTP REST API                         |                        Internal REST API
+              │                               |                               |│                               |                               |
+              |                               │                               |
+              ▼                               |                               ▼
 - Candidate Management            • JWT Authentication          - PDF Text Extraction
 - Job Description Postings        • Route Orchestration         - Groq Llama 3 LLM
 - Multipart ZIP Uploader          • Multipart Stream Handling   - Evaluation & Scoring
 - Ranked Leaderboards             • Email Notifications         - Fallback Mock Mode
-
-                                              │
-                                              ▲
+                                              |
+                                              |
+                                              |
                                               │
                                               ▼
                                 ┌──────────────────────────┐
                                 │     MongoDB Database     │
                                 │    (Persistent Store)    │
                                 └──────────────────────────┘
+
 ```
 
 
