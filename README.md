@@ -83,7 +83,7 @@
 
 Three services, run side by side — nothing talks to the frontend except the Node backend:
 
-```
+
 graph LR
     subgraph Frontend ["frontend/ (Port :5173)"]
         A["React + Vite<br>• HR UI: post jobs<br>• upload resumes<br>• view ranked results"]
@@ -104,7 +104,7 @@ graph LR
     style B fill:#339933,stroke:#fff,stroke-width:2px,color:#fff
     style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
 
-```
+
 
 ### How a request flows end to end
 
