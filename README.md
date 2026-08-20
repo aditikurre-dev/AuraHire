@@ -79,7 +79,7 @@
 
 <br/>
 
-## 🏗️ Architecture
+## 🏗️ Architecture & System Design
 
 Three services, run side by side — nothing talks to the frontend except the Node backend:
 
@@ -146,6 +146,62 @@ GET /api/jobs/:id/results
 ```
 
 <br/>
+
+## Tech Stack
+
+```
+## 🛠️ Tech Stack
+
+### Frontend
+![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-5.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-6.24-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-1.7-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-Hand--rolled-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
+### Backend
+![Node.js](https://img.shields.io/badge/Node.js-Runtime-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-4.19-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-8.x-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-ODM-880000?style=for-the-badge)
+![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Nodemailer](https://img.shields.io/badge/Nodemailer-Email-0F9D58?style=for-the-badge)
+
+### AI Microservice
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-Async_API-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq-Llama_3.1-F55036?style=for-the-badge)
+![Pydantic](https://img.shields.io/badge/Pydantic-Validation-E92063?style=for-the-badge&logo=pydantic&logoColor=white)
+
+### Tooling
+![Git](https://img.shields.io/badge/Git-VCS-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-Hosting-181717?style=for-the-badge&logo=github&logoColor=white)
+
+<details>
+<summary><b>Full dependency list</b></summary>
+
+| Package | Version | Used for |
+|---|---|---|
+| `react` / `react-dom` | 18.3 | UI |
+| `vite` | 5.3 | Dev server & build |
+| `react-router-dom` | 6.24 | Client-side routing |
+| `axios` | 1.7 | HTTP client |
+| `express` | 4.19 | HTTP server / routing |
+| `mongoose` | 8.4 | MongoDB ODM |
+| `jsonwebtoken` | 9.0 | Auth tokens |
+| `bcryptjs` | 2.4 | Password hashing |
+| `multer` | 1.4 | Multipart `.zip` uploads |
+| `adm-zip` | 0.5 | Extracting uploaded resumes |
+| `mammoth` | 1.7 | `.docx` text extraction |
+| `pdf-parse` | 1.1 | `.pdf` text extraction |
+| `nodemailer` | 6.9 | Verification emails |
+| `fastapi` | latest | AI microservice API |
+| `groq` | latest | LLM scoring calls |
+| `pydantic` | latest | Request/response validation |
+
+</details>
+
+```
 
 ## 🚀 Quick Start
 
