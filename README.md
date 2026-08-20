@@ -1,149 +1,289 @@
-# AuraHire — MERN + Python/Groq AI Resume Screener
+<div align="center">
 
-Three services, run together:
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FF5A5F,50:7C5CFC,100:00C2A8&height=220&section=header&text=AuraHire&fontSize=72&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=AI-Powered%20Resume%20Screening%20for%20Modern%20HR%20Teams&descAlignY=58&descSize=18" width="100%" />
+
+<a href="https://github.com/aditikurre-dev/AuraHire/stargazers"><img src="https://img.shields.io/github/stars/aditikurre-dev/AuraHire?style=for-the-badge&color=FF5A5F&labelColor=1a1a2e" alt="stars"/></a>
+<a href="https://github.com/aditikurre-dev/AuraHire/network/members"><img src="https://img.shields.io/github/forks/aditikurre-dev/AuraHire?style=for-the-badge&color=7C5CFC&labelColor=1a1a2e" alt="forks"/></a>
+<a href="https://github.com/aditikurre-dev/AuraHire/issues"><img src="https://img.shields.io/github/issues/aditikurre-dev/AuraHire?style=for-the-badge&color=00C2A8&labelColor=1a1a2e" alt="issues"/></a>
+<img src="https://img.shields.io/badge/status-active%20development-FFD23F?style=for-the-badge&labelColor=1a1a2e" alt="status"/>
+
+<br/>
+
+<img src="https://readme-typing-svg.demolab.com?font=Poppins&weight=600&size=22&duration=2800&pause=900&color=FF5A5F&center=true&vCenter=true&width=700&lines=Upload+a+zip+of+resumes.;Get+an+AI-ranked+shortlist+in+seconds.;Every+job+and+shortlist%2C+attributed+by+name.;Built+MERN+%2B+Python+%2B+Groq+LLM+%E2%9A%A1" alt="Typing SVG" />
+
+</div>
+
+<br/>
+
+<div align="center">
+
+![React](https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Python](https://img.shields.io/badge/Python_3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Groq](https://img.shields.io/badge/Groq_LLM-F55036?style=for-the-badge&logo=lightning&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT_Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+
+</div>
+
+<p align="center">
+  <b>AuraHire</b> is a three-service resume-screening platform: an HR posts a job and drops in a zip of
+  resumes, a Python microservice scores every candidate against it with an LLM, and the results come back
+  ranked, explained, and ready to shortlist — with a full audit trail of who did what.
+</p>
+
+<div align="center">
+
+[🚀 Quick Start](#-quick-start) · [✨ Features](#-features) · [🏗️ Architecture](#️-architecture) · [🔐 Environment Variables](#-environment-variables) · [📁 Project Structure](#-project-structure) · [🛣️ Roadmap](#️-before-going-to-production)
+
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:FF5A5F,50:7C5CFC,100:00C2A8&height=4&section=header" width="100%"/>
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🔐 Auth that respects real HR workflows
+- Register → **log in immediately**, even before verifying your email
+- Verify anytime via a popup, no page navigation lost
+- Job posting stays gated behind verification — everything else doesn't
+- Live cross-tab sync: verify in one tab, the other updates instantly
+
+### 🧑‍💼 A profile that's actually useful
+- Custom avatar picker + auto-generated initials fallback
+- Profile-completion ring that nudges you to fill in the gaps
+- Editable company name, industry, size, website, HQ, "About"
+
+</td>
+<td width="50%" valign="top">
+
+### 🧠 AI resume screening, with a safety net
+- Drop a `.zip` of `.pdf` / `.docx` / `.txt` resumes — any number at once
+- Groq LLM scores each one against required + preferred skills
+- **Mock mode**: no API key yet? The full pipeline still runs on a
+  keyword-overlap scorer so you can build and test for free
+- Every score comes with a plain-language "why," not just a number
+
+### 🏷️ Attribution, not guesswork
+- **Posted by** — typed fresh per job, so the record survives HR turnover
+- **Shortlisted by** — captured per reviewer, per job, automatically
+  timestamped — no more "wait, who picked this candidate?"
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+<sub>+ Job History with live shortlist counts · a cross-job Shortlist view · dark/light theme · a fully responsive layout</sub>
+</div>
+
+<br/>
+
+## 🏗️ Architecture
+
+Three services, run side by side — nothing talks to the frontend except the Node backend:
 
 ```
-frontend/    React (Vite)         → HR UI: job form, resume upload, ranked results
-backend/     Node/Express + MongoDB → jobs, uploads, orchestration
-ai-service/  Python/FastAPI + Groq  → LLM-based resume scoring
+┌──────────────────┐      ┌──────────────────────┐      ┌────────────────────────┐
+│     frontend/     │      │       backend/        │      │      ai-service/        │
+│   React + Vite    │◄────►│   Node/Express + Mongo │◄────►│  Python/FastAPI + Groq  │
+│                    │ REST │                        │ REST │                          │
+│  HR UI: post jobs, │      │  Auth, jobs, uploads,  │      │  LLM-based resume        │
+│  upload resumes,   │      │  orchestration, email  │      │  scoring (+ mock mode    │
+│  view ranked results│     │  verification          │      │  fallback, no key needed)│
+└──────────────────┘      └──────────────────────┘      └────────────────────────┘
+      :5173                        :5000                          :8001
 ```
 
-## Run it (no Docker needed)
+### How a request flows end to end
 
-## 1. Prerequisites
-- Node.js 18+ and npm
-- Python 3.10+
-- MongoDB running locally (or a free Atlas cluster — see below)
-- A free Groq API key: https://console.groq.com/keys (optional to start —
-  see Mock Mode below)
-
-## 2. Open in VS Code
-Open the `aurahire-mern` folder in VS Code. You'll run three terminals side by
-side (View → Terminal, then click the "+" to open more, or use the split
-terminal icon) — one per service.
-
-## 3. Set up MongoDB
-**Easiest for local dev:** install MongoDB Community Edition and run it
-locally (default connects to `mongodb://127.0.0.1:27017`).
-
-**Or use MongoDB Atlas** (free tier, no local install): create a cluster at
-mongodb.com/atlas, get your connection string, and put it in `backend/.env`.
-
-## 4. Terminal 1 — AI service (Python + Groq)
+```text
+Browser (React)
+  → POST /api/companies/register or /login   Node: create/verify company, return JWT
+  → POST /api/jobs                           Node: create job in MongoDB, companyId from JWT
+  → POST /api/jobs/:id/resumes                Node: unzip, extract text from each resume
+      → POST http://ai-service/score              Python: call Groq per resume, return JSON scores
+  → Node saves scored Candidate documents to MongoDB
+  → GET  /api/jobs/:id/results                React polls this until job.status === "completed"
 ```
+
+<br/>
+
+## 🚀 Quick Start
+
+No Docker needed — three terminals, one per service.
+
+### 0. Prerequisites
+
+| Requirement | Why |
+|---|---|
+| Node.js 18+ & npm | Backend + frontend |
+| Python 3.10+ | AI service |
+| MongoDB (local or [Atlas](https://mongodb.com/atlas) free tier) | Data store |
+| A free [Groq API key](https://console.groq.com/keys) | *Optional to start* — see Mock Mode below |
+
+<details>
+<summary><b>🐍 Terminal 1 — AI service (Python + Groq)</b></summary>
+
+```bash
 cd ai-service
 python3 -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 cp .env.example .env
-# edit .env and paste your real GROQ_API_KEY (or skip this — see Mock Mode)
-export GROQ_API_KEY=your_key_here
+# edit .env and paste your real GROQ_API_KEY — or skip this, see Mock Mode
 uvicorn main:app --reload --port 8001
 ```
-Check it's alive: open http://localhost:8001/health — should show
-`"groq_key_configured": true`.
 
-### Mock Mode
-If `GROQ_API_KEY` is not set, the AI service automatically falls back to a
-simple keyword-overlap scorer instead of calling Groq. This lets you build
-and test the entire pipeline (upload → extract → score → display) for free,
-before you've set up a Groq key. `/health` will show `"mock_mode": true`,
-and the frontend results page will show a banner when mock scores are being
-displayed. Add a real `GROQ_API_KEY` and restart the service to switch to
-real LLM-based scoring — no code changes needed.
+Check it's alive → **http://localhost:8001/health** should show `"groq_key_configured": true`.
 
-## 5. Terminal 2 — Backend (Node/Express)
-```
+> **Mock Mode:** no `GROQ_API_KEY`? The service automatically falls back to a keyword-overlap
+> scorer, so the *entire* pipeline (upload → extract → score → rank) works for free before you've
+> set up Groq. `/health` shows `"mock_mode": true`, and the results page shows a banner whenever
+> mock scores are being displayed. Add a real key and restart to flip to LLM scoring — zero code
+> changes.
+
+</details>
+
+<details>
+<summary><b>🟢 Terminal 2 — Backend (Node/Express)</b></summary>
+
+```bash
 cd backend
 npm install
 cp .env.example .env
 # edit .env if your Mongo URI or AI service port differs
 npm run dev
 ```
+
 You should see `MongoDB connected` and `AuraHire backend running on port 5000`.
 
-### Setting up email verification (optional but recommended)
-New accounts must verify their email before they can log in. If you leave
-`SMTP_USER`/`SMTP_PASS` blank in `backend/.env`, verification links are
-printed to this terminal instead of emailed — copy the link into your
-browser to test the flow without setting up email first.
+> **Email verification:** if `SMTP_USER`/`SMTP_PASS` are blank, verification links print straight
+> to this terminal instead of emailing — copy-paste to test the flow with zero email setup. To send
+> real emails via Gmail: turn on [2-Step Verification](https://myaccount.google.com/security),
+> generate an [App Password](https://myaccount.google.com/apppasswords), and set `SMTP_USER` /
+> `SMTP_PASS` / `SMTP_FROM` in `backend/.env`. Any other SMTP provider works too.
 
-To send real emails via Gmail (free):
-1. Turn on 2-Step Verification on the Google account you want to send from:
-   https://myaccount.google.com/security
-2. Create an App Password: https://myaccount.google.com/apppasswords
-   (choose "Mail" as the app) — Google gives you a 16-character password.
-3. In `backend/.env`, set:
-   ```
-   SMTP_USER=your_email@gmail.com
-   SMTP_PASS=the_16_character_app_password   # not your normal Gmail password
-   SMTP_FROM=AuraHire <your_email@gmail.com>
-   ```
-4. Restart the backend. Registering a new account will now send a real
-   email with a "Verify Email" button.
+</details>
 
-Any other SMTP provider (Outlook, a transactional service like Brevo/Resend,
-your own mail server) works too — just set `SMTP_HOST`/`SMTP_PORT` to match.
+<details>
+<summary><b>⚛️ Terminal 3 — Frontend (React)</b></summary>
 
-## 6. Terminal 3 — Frontend (React)
-```
+```bash
 cd frontend
 npm install
 npm run dev
 ```
-Open http://localhost:5173 — this is the HR-facing app.
 
-## 7. Try it end to end
-1. On the frontend, register a company account (`/register`), then you'll be
-   logged in and redirected straight to the job creation page
-2. Fill in job details and list required skills (comma-separated), set
-   minimum experience — the company posting the job is taken from your
-   logged-in session, not typed in
-3. Attach a `.zip` file containing resumes (`.pdf`, `.docx`, or `.txt`)
-4. Click "Filter Resumes" — you'll land on the results page, which polls
-   automatically while the AI service scores each resume via Groq
-5. Once complete, you'll see a ranked table with scores, matched/missing
-   skills, and a "Shortlist" button per candidate
+Open **http://localhost:5173** — this is the HR-facing app.
 
-## How a request flows through the system
+</details>
+
+### Try it end to end
+
+1. **Register** a company account — you're logged in immediately, no need to verify first
+2. **Post a job**: title, description, required/preferred skills, minimum experience, and *who's
+   posting it* (attributed by name, not by account)
+3. **Attach a `.zip`** of resumes (`.pdf`, `.docx`, `.txt` — mix and match)
+4. Hit **Filter Resumes** → land on a live-polling results page while the AI service scores each one
+5. Get a **ranked table**: score, matched/missing skills, a plain-language reason, and a
+   **Shortlist** button that records who shortlisted whom, and when
+
+<br/>
+
+## 🔐 Environment Variables
+
+<details>
+<summary><b>backend/.env</b></summary>
+
+| Variable | Purpose |
+|---|---|
+| `PORT` | Backend port (default `5000`) |
+| `MONGO_URI` | MongoDB connection string |
+| `AI_SERVICE_URL` | Where the Python service lives (default `http://127.0.0.1:8001`) |
+| `JWT_SECRET` | Signs session tokens — **use a long random string, never the sample value** |
+| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_FROM` | Email verification — leave blank to print links to the console instead |
+| `FRONTEND_URL` | Used to build the link inside verification emails |
+
+</details>
+
+<details>
+<summary><b>ai-service/.env</b></summary>
+
+| Variable | Purpose |
+|---|---|
+| `GROQ_API_KEY` | Enables real LLM scoring — omit to run in Mock Mode |
+
+</details>
+
+> ⚠️ **Never commit real secrets.** `.env.example` files should hold placeholder values only —
+> double-check this repo's example files before making it public.
+
+<br/>
+
+## 📁 Project Structure
+
 ```
-Browser (React)
-  → POST /api/companies/register or /login  (Node: create/verify company, return JWT)
-  → POST /api/jobs                 (Node: create job in MongoDB, companyId from JWT)
-  → POST /api/jobs/:id/resumes     (Node: unzip, extract text from each resume)
-      → POST http://ai-service/score   (Python: call Groq per resume, return JSON scores)
-  → Node saves scored Candidate documents to MongoDB
-  → GET /api/jobs/:id/results      (React polls this until job.status === "completed")
+AuraHire/
+├── frontend/          React (Vite) — HR UI
+│   └── src/
+│       ├── pages/       Home, Register, Login, Profile, CreateJob, JobResults, JobHistory, Shortlisted
+│       ├── components/  Navbar, modals, shared UI
+│       └── context/     Auth + Theme providers
+├── backend/            Node/Express + MongoDB
+│   ├── controllers/     company, job, candidate logic
+│   ├── models/          Company, PendingRegistration, Job, Candidate
+│   ├── routes/           REST endpoints
+│   └── middleware/       JWT auth guard
+└── ai-service/          Python/FastAPI + Groq
+    └── main.py           Scoring endpoint + mock-mode fallback
 ```
 
-## Resume files are stored in two places
-- **Disk**: under `backend/uploads/extracted/<jobId>/...` (as before)
-- **MongoDB**: the raw file bytes are saved on each `Candidate` document
-  (`fileData` field, capped at 15MB per file to stay under MongoDB's 16MB
-  document limit — oversized files still save to disk, just not to Mongo)
+<br/>
 
-`fileData` is excluded from normal list/results queries (`select: false` in
-the schema) so `/api/jobs/:id/results` stays fast even with thousands of
-candidates. To fetch the actual file bytes:
+## 🗄️ Where resumes actually live
+
+- **Disk** — `backend/uploads/extracted/<jobId>/...`
+- **MongoDB** — raw bytes on each `Candidate` document (`fileData`, capped at 15MB to stay under
+  Mongo's 16MB document limit; oversized files still save to disk, just not to Mongo)
+
+`fileData` is excluded from normal queries (`select: false`) so results stay fast even with
+thousands of candidates. Fetch the actual bytes via:
+
 ```
 GET /api/candidates/:candidateId/resume
 ```
-This is what powers the "View" link in the results table.
 
-## Before going to production
-- **File storage at scale**: individual resumes are stored as `Buffer` fields
-  directly on the `Candidate` document, which is simple and fine for typical
-  resume sizes (a few hundred KB) but caps out at MongoDB's 16MB document
-  limit. If you expect many large PDFs (scanned, image-heavy), switch to
-  GridFS instead of storing bytes inline.
-- **Job queue**: resume processing runs as an in-process background task —
-  fine for dozens of resumes, but for true "thousands of resumes" scale, move
-  this to a real queue (BullMQ + Redis) so it survives server restarts and
-  can be scaled horizontally
-- **Groq rate limits**: scoring one resume per API call in a loop is simple
-  but slow at scale — batch requests or run them concurrently with a
-  concurrency limit (e.g. `p-limit` equivalent) once you're past a few
-  hundred resumes per job
-- **Model choice**: `llama-3.1-8b-instant` is fast and cheap; swap to
-  `llama-3.3-70b-versatile` in `ai-service/main.py` if you need higher
-  scoring accuracy and can tolerate slightly higher latency/cost
+<br/>
+
+## 🛣️ Before going to production
+
+| Area | Current approach | At scale, switch to |
+|---|---|---|
+| **File storage** | `Buffer` field on the Candidate doc | GridFS, once resumes get large/image-heavy |
+| **Resume processing** | In-process background task | A real queue (BullMQ + Redis) — survives restarts, scales horizontally |
+| **Groq calls** | One resume per API call, in a loop | Batched or concurrency-limited requests past a few hundred resumes/job |
+| **Model** | `llama-3.1-8b-instant` (fast, cheap) | `llama-3.3-70b-versatile` for higher accuracy at slightly higher latency/cost |
+
+<br/>
+
+## 🤝 Contributing
+
+Issues and PRs are welcome — this is an actively evolving project. If you're proposing a bigger
+change, open an issue first so we're aligned before you put in the work.
+
+<br/>
+
+<div align="center">
+
+Built with 🧡 using the MERN stack + Python — because resumes shouldn't take all afternoon to read.
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00C2A8,50:7C5CFC,100:FF5A5F&height=120&section=footer" width="100%"/>
+
+</div>
