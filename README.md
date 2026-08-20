@@ -84,15 +84,26 @@
 Three services, run side by side — nothing talks to the frontend except the Node backend:
 
 ```
-┌──────────────────┐      ┌──────────────────────┐      ┌────────────────────────┐
-│     frontend/     │      │       backend/        │      │      ai-service/        │
-│   React + Vite    │◄────►│   Node/Express + Mongo │◄────►│  Python/FastAPI + Groq  │
-│                    │ REST │                        │ REST │                          │
-│  HR UI: post jobs, │      │  Auth, jobs, uploads,  │      │  LLM-based resume        │
-│  upload resumes,   │      │  orchestration, email  │      │  scoring (+ mock mode    │
-│  view ranked results│     │  verification          │      │  fallback, no key needed)│
-└──────────────────┘      └──────────────────────┘      └────────────────────────┘
-      :5173                        :5000                          :8001
+graph LR
+    subgraph Frontend ["frontend/ (Port :5173)"]
+        A["React + Vite<br>• HR UI: post jobs<br>• upload resumes<br>• view ranked results"]
+    end
+
+    subgraph Backend ["backend/ (Port :5000)"]
+        B["Node/Express + Mongo<br>• Auth, jobs, uploads<br>• orchestration<br>• email verification"]
+    end
+
+    subgraph AIService ["ai-service/ (Port :8001)"]
+        C["Python/FastAPI + Groq<br>• LLM-based resume scoring<br>• (mock mode fallback, no key needed)"]
+    end
+
+    A <-->|REST API| B
+    B <-->|REST API| C
+
+    style A fill:#7C5CFC,stroke:#fff,stroke-width:2px,color:#fff
+    style B fill:#339933,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
+
 ```
 
 ### How a request flows end to end
