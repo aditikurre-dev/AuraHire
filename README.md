@@ -118,13 +118,31 @@ Three services, run side by side — nothing talks to the frontend except the No
 ### How a request flows end to end
 
 ```text
-Browser (React)
-  → POST /api/companies/register or /login   Node: create/verify company, return JWT
-  → POST /api/jobs                           Node: create job in MongoDB, companyId from JWT
-  → POST /api/jobs/:id/resumes                Node: unzip, extract text from each resume
-      → POST http://ai-service/score              Python: call Groq per resume, return JSON scores
-  → Node saves scored Candidate documents to MongoDB
-  → GET  /api/jobs/:id/results                React polls this until job.status === "completed"
+┌───────────────────┐
+│  Browser (React)  │
+└─────────┬─────────┘
+          │
+          ▼
+POST /api/companies/register   (or /login)
+          │   
+          |   Node → creates/verifies the company, returns a JWT
+          ▼
+POST /api/jobs
+          │   
+          |   Node → creates the job in MongoDB, companyId comes from the JWT
+          ▼
+POST /api/jobs/:id/resumes
+          │   
+          |   Node → unzips the file, extracts text from every resume
+          │
+          ├──►  POST http://ai-service/score
+          │           Python → calls Groq once per resume, returns JSON scores
+          │
+          |   Node → saves the scored Candidate documents to MongoDB
+          ▼
+GET /api/jobs/:id/results
+          │   
+          ├──►  React → polls this endpoint until job.status === "completed"
 ```
 
 <br/>
