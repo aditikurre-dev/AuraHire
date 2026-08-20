@@ -83,27 +83,30 @@
 
 Three services, run side by side — nothing talks to the frontend except the Node backend:
 
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                       AURA HIRE - SYSTEM ARCHITECTURE PIPELINE                           │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 
-graph LR
-    subgraph Frontend ["frontend/ (Port :5173)"]
-        A["React + Vite<br>• HR UI: post jobs<br>• upload resumes<br>• view ranked results"]
-    end
+  [ 1. FRONTEND LAYER ]               [ 2. BACKEND LAYER ]            [ 3. AI MICROSERVICE ]
+┌────────────────────────┐          ┌─────────────────────────┐      ┌───────────────────────────┐
+│       React SPA        │          │     Node.js / Express    │      │      Python FastAPI        │
+│       Port :5173       ├─────────►│       Port :5000          │      │       Port :8001           │
+└───────────┬────────────┘   HTTP   └────────────┬────────────┘      └─────────────▲─────────────┘
+            │                                    │                                 │
+            │         HTTP REST API              │         Internal REST API      │
+            ▼                                    ▼                                │
+  • Candidate Management             • JWT Authentication            • PDF Text Extraction
+  • Job Description Postings         • Route Orchestration            • Groq Llama 3 LLM
+  • Multipart ZIP Uploader           • Multipart Stream Handling      • Evaluation & Scoring
+  • Ranked Leaderboards              • Email Notifications            • Fallback Mock Mode
+            │                                    │
+            │                                    ▼
+            │                        [ MongoDB Database ]
+            └─────────────────────────────────────────────────────────┘
+                                    (Persistent Data Storage)
 
-    subgraph Backend ["backend/ (Port :5000)"]
-        B["Node/Express + Mongo<br>• Auth, jobs, uploads<br>• orchestration<br>• email verification"]
-    end
-
-    subgraph AIService ["ai-service/ (Port :8001)"]
-        C["Python/FastAPI + Groq<br>• LLM-based resume scoring<br>• (mock mode fallback, no key needed)"]
-    end
-
-    A <-->|REST API| B
-    B <-->|REST API| C
-
-    style A fill:#7C5CFC,stroke:#fff,stroke-width:2px,color:#fff
-    style B fill:#339933,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#009688,stroke:#fff,stroke-width:2px,color:#fff
-
+```
 
 
 ### How a request flows end to end
