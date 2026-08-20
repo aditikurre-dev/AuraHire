@@ -100,10 +100,9 @@ Three services, run side by side — nothing talks to the frontend except the No
  - Job Description Postings   • Route Orchestration        • Groq Llama 3 LLM
  - Multipart ZIP Uploader     • Multipart Stream Handling  • Evaluation & Scoring
  - Ranked Leaderboards        • Email Notifications        • Fallback Mock Mode
-             │                            │                            │
+                                          │
                                           ▼
                                 [ MongoDB Database ]
-             └────────────────────────────┴────────────────────────────┘
                               (Persistent Data Storage)
 
 ```
