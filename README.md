@@ -162,10 +162,8 @@ GET /api/jobs/:id/results
 
 ### Backend
 
-```
-
 |     Technology         |                 Purpose                 |
-|------------------------|-----------------------------------------|
+|---|---|
 | Node.js                | JavaScript runtime for the server       |
 | Express                | Web framework for building REST APIs    |
 | MongoDB (Mongoose)     | Database & object modeling              |
@@ -186,7 +184,7 @@ GET /api/jobs/:id/results
 ```
 
 |   Technology    |             Purpose                         |
-|-----------------|---------------------------------------------|
+|---|---|
 | Python          | Core language for the AI service            |
 | FastAPI         | Web framework for building the API          |
 | Uvicorn         | ASGI server to run FastAPI                  |
@@ -201,7 +199,7 @@ GET /api/jobs/:id/results
 ```
 
 |     Tool      |               Purpose                    |
-|---------------|------------------------------------------|
+|---|---|
 | Git           | Version control                          |
 | Nodemon       | Auto-restarts backend server on changes  |
 | Vite          | Frontend dev server & build tool         |
