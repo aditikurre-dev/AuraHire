@@ -314,22 +314,67 @@ Open **http://localhost:5173** — this is the User-facing app.
 
 The app will be running at `http://localhost:5173`, with the backend on port `5000` and the AI service on port `8001`.
 
+</br>
+
 ## 📁 Project Structure
 
 ```
 AuraHire/
-├── frontend/          React (Vite) — HR UI
-│   └── src/
-│       ├── pages/       Home, Register, Login, Profile, CreateJob, JobResults, JobHistory, Shortlisted
-│       ├── components/  Navbar, modals, shared UI
-│       └── context/     Auth + Theme providers
-├── backend/            Node/Express + MongoDB
-│   ├── controllers/     company, job, candidate logic
-│   ├── models/          Company, PendingRegistration, Job, Candidate
-│   ├── routes/           REST endpoints
-│   └── middleware/       JWT auth guard
-└── ai-service/          Python/FastAPI + Groq
-    └── main.py           Scoring endpoint + mock-mode fallback
+├── ai-service/                           Python/FastAPI + Groq
+|   ├── main.py
+|   └── requirements.txt
+|
+├── backend/                              Node/Express + MongoDB
+|   ├── config
+|   |   └── db.js                
+│   ├── controllers/
+|   |   ├── candidateController.js
+|   |   ├── companyController.js
+|   |   └── jobController.js  
+│   ├── middleware/
+|   |   ├── auth.js
+|   |   └── upload.js       
+│   ├── models/
+|   |   ├── Candidate.js
+|   |   ├── Company.js
+|   |   ├── Job.js
+|   |   └── PendingRegistration.js           
+│   ├── routes/
+|   |   ├── candidateRoutes.js
+|   |   ├── companyRoutes.js
+|   |   └── jobRoutes.js
+|   ├── utils/
+|   |   ├── email.js
+|   |   └── extractText.js
+|   └── server.js
+|
+└── frontend/                           React (Vite) — HR UI
+    └── src/
+        ├── api/
+        |   └── api.js
+        ├── components/
+        |   ├── AvatarPickerModal.jsx
+        |   ├── CompanyProfileModal.jsx
+        |   ├── Navbar.jsx
+        |   ├── ProtectedRoute.jsx
+        |   └── VerifyEmailModal.jsx
+        ├── context/
+        |   ├── AuthContext.jsx
+        |   └── ThemeContext.jsx       
+        ├── pages/
+        |   ├── CreateJob.jsx
+        |   ├── Home.jsx
+        |   ├── JobHistory.jsx
+        |   ├── JobResults.jsx
+        |   ├── Login.jsx
+        |   ├── Profile.jsx
+        |   ├── Register.jsx
+        |   └── Shortlisted.jsx
+        ├── App.jsx
+        ├── index.css
+        ├── main.jsx
+        └── index.html
+
 ```
 
 <br/>
