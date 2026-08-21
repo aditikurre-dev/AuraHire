@@ -159,7 +159,6 @@ GET /api/jobs/:id/results
 | Vite                | Build tool & dev server         |
 | CSS (custom)        | App styling                     |
 
-
 ### Backend
 
 |     Technology         |                 Purpose                 |
@@ -177,11 +176,8 @@ GET /api/jobs/:id/results
 | CORS                   | Enables cross-origin requests           |
 | dotenv                 | Manages environment variables           |
 
-```
-
 ### AI Microservice
 
-```
 
 |   Technology    |             Purpose                         |
 |---|---|
@@ -192,11 +188,9 @@ GET /api/jobs/:id/results
 | Pydantic        | Data validation & request/response models   |
 | python-dotenv   | Manages environment variables               |
 
-```
 
 ### Tooling
 
-```
 
 |     Tool      |               Purpose                    |
 |---|---|
@@ -206,7 +200,6 @@ GET /api/jobs/:id/results
 | npm           | Package manager (frontend & backend)     |
 | dotenv        | Environment variable management          |
 
-```
 
 ## 🚀 Quick Start
 
