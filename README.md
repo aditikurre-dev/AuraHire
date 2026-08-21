@@ -221,7 +221,9 @@ GET /api/jobs/:id/results
 git clone https://github.com/< username >/AuraHire.git
 cd AuraHire
 ```
+</details>
 
+<details>
 <summary><b>🐍 Terminal 2 — AI service (Python + Groq)</b></summary>
 
 ```bash
