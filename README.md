@@ -203,28 +203,34 @@ GET /api/jobs/:id/results
 
 ## 🚀 Quick Start
 
-No Docker needed — three terminals, one per service.
-
 ### 0. Prerequisites
 
 | Requirement | Why |
 |---|---|
 | Node.js 18+ & npm | Backend + frontend |
 | Python 3.10+ | AI service |
-| MongoDB (local or [Atlas](https://mongodb.com/atlas) free tier) | Data store |
-| A free [Groq API key](https://console.groq.com/keys) | *Optional to start* — see Mock Mode below |
+| MongoDB ([Compass](https://www.mongodb.com/) free tier) | Data store |
+| A free [Groq API key](https://console.groq.com/keys) | Groq LLM Interface |
+
+### 1. Installation
 
 <details>
-<summary><b>🐍 Terminal 1 — AI service (Python + Groq)</b></summary>
+<summary><b>📥 Terminal 1 - Clone the repository (GitHub)
+
+```bash
+git clone https://github.com/< username >/AuraHire.git
+cd AuraHire
+```
+
+<summary><b>🐍 Terminal 2 — AI service (Python + Groq)</b></summary>
 
 ```bash
 cd ai-service
 python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
+source venv/Scripts/activate        
 pip install -r requirements.txt
 cp .env.example .env
-# edit .env and paste your real GROQ_API_KEY — or skip this, see Mock Mode
-uvicorn main:app --reload --port 8001
+python -m uvicorn main:app --reload --port 8001
 ```
 
 Check it's alive → **http://localhost:8001/health** should show `"groq_key_configured": true`.
@@ -238,28 +244,25 @@ Check it's alive → **http://localhost:8001/health** should show `"groq_key_con
 </details>
 
 <details>
-<summary><b>🟢 Terminal 2 — Backend (Node/Express)</b></summary>
+<summary><b>🟢 Terminal 3 — Backend (Node/Express)</b></summary>
 
 ```bash
 cd backend
 npm install
 cp .env.example .env
-# edit .env if your Mongo URI or AI service port differs
-npm run dev
+node server.js
 ```
 
 You should see `MongoDB connected` and `AuraHire backend running on port 5000`.
 
-> **Email verification:** if `SMTP_USER`/`SMTP_PASS` are blank, verification links print straight
-> to this terminal instead of emailing — copy-paste to test the flow with zero email setup. To send
-> real emails via Gmail: turn on [2-Step Verification](https://myaccount.google.com/security),
+> **Email verification:** To send real emails via Gmail: turn on [2-Step Verification](https://myaccount.google.com/security),
 > generate an [App Password](https://myaccount.google.com/apppasswords), and set `SMTP_USER` /
-> `SMTP_PASS` / `SMTP_FROM` in `backend/.env`. Any other SMTP provider works too.
+> `SMTP_PASS` / `SMTP_FROM` in `backend/.env`.
 
 </details>
 
 <details>
-<summary><b>⚛️ Terminal 3 — Frontend (React)</b></summary>
+<summary><b>⚛️ Terminal 4 — Frontend (React)</b></summary>
 
 ```bash
 cd frontend
@@ -267,13 +270,13 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:5173** — this is the HR-facing app.
+Open **http://localhost:5173** — this is the User-facing app.
 
 </details>
 
 ### Try it end to end
 
-1. **Register** a company account — you're logged in immediately, no need to verify first
+1. **Register** a company account — you're logged in immediately (a JWT is issued right away); email verification is only required later, before you can post a job.
 2. **Post a job**: title, description, required/preferred skills, minimum experience, and *who's
    posting it* (attributed by name, not by account)
 3. **Attach a `.zip`** of resumes (`.pdf`, `.docx`, `.txt` — mix and match)
@@ -285,33 +288,28 @@ Open **http://localhost:5173** — this is the HR-facing app.
 
 ## 🔐 Environment Variables
 
-<details>
-<summary><b>backend/.env</b></summary>
+### backend/.env
 
-| Variable | Purpose |
+|     Variable      |                Description                         |
 |---|---|
-| `PORT` | Backend port (default `5000`) |
-| `MONGO_URI` | MongoDB connection string |
-| `AI_SERVICE_URL` | Where the Python service lives (default `http://127.0.0.1:8001`) |
-| `JWT_SECRET` | Signs session tokens — **use a long random string, never the sample value** |
-| `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` / `SMTP_FROM` | Email verification — leave blank to print links to the console instead |
-| `FRONTEND_URL` | Used to build the link inside verification emails |
+| `PORT`            | Port for the backend server (default: 5000)        |
+| `MONGO_URI`       | MongoDB connection string                          |
+| `AI_SERVICE_URL`  | URL of the running AI microservice                 |
+| `JWT_SECRET`      | Secret key used to sign JWT tokens                 |
+| `SMTP_HOST`       | SMTP server host (for sending verification emails) |
+| `SMTP_PORT`       | SMTP server port                                   |
+| `SMTP_USER`       | SMTP account username                              |
+| `SMTP_PASS`       | SMTP account password / app password               |
+| `SMTP_FROM`       | Sender email shown on verification emails          |
+| `FRONTEND_URL`    | Base URL of the frontend (for email links)         |
 
-</details>
-
-<details>
-<summary><b>ai-service/.env</b></summary>
+### ai-service/.env
 
 | Variable | Purpose |
 |---|---|
 | `GROQ_API_KEY` | Enables real LLM scoring — omit to run in Mock Mode |
 
-</details>
-
-> ⚠️ **Never commit real secrets.** `.env.example` files should hold placeholder values only —
-> double-check this repo's example files before making it public.
-
-<br/>
+The app will be running at `http://localhost:5173`, with the backend on port `5000` and the AI service on port `8001`.
 
 ## 📁 Project Structure
 
