@@ -151,17 +151,14 @@ GET /api/jobs/:id/results
 
 ### Frontend
 
-```
-
 |    Technology       |            Purpose              |
-|---------------------|---------------------------------|
+|---|---|
 | React 18            | Builds the UI                   |
 | React Router DOM    | Handles page routing            |
 | Axios               | HTTP client for API requests    |
 | Vite                | Build tool & dev server         |
 | CSS (custom)        | App styling                     |
 
-```
 
 ### Backend
 
