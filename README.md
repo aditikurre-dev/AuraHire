@@ -215,7 +215,7 @@ GET /api/jobs/:id/results
 ### 1. Installation
 
 <details>
-<summary><b>📥 Terminal 1 - Clone the repository (GitHub)
+<summary><b>📥 Terminal 1 - Clone the repository (GitHub)</summary>
 
 ```bash
 git clone https://github.com/< username >/AuraHire.git
