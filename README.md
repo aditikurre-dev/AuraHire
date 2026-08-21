@@ -278,7 +278,8 @@ Open **http://localhost:5173** — this is the User-facing app.
 
 ### Try it end to end
 
-1. **Register** a company account — you're logged in immediately (a JWT is issued right away); email verification is only required later, before you can post a job.
+1. **Register** a company account — you're logged in immediately (a JWT is issued right away); email
+  verification is only required later, before you can post a job.
 2. **Post a job**: title, description, required/preferred skills, minimum experience, and *who's
    posting it* (attributed by name, not by account)
 3. **Attach a `.zip`** of resumes (`.pdf`, `.docx`, `.txt` — mix and match)
